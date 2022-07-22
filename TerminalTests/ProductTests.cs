@@ -43,6 +43,7 @@ namespace TerminalTests
         [InlineData("", 1.25, null, null)]
         [InlineData(" ", 1.25, 3.5, 3)]
         [InlineData("   ", 1.25, null, null)]
+        [InlineData(null, 1.25, null, null)]
         public void ProductCode_ShouldNotBeEmpty(
             string code, double price, double? discountPrice, int? discountQuantity)
         {

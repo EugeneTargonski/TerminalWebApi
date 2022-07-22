@@ -20,9 +20,9 @@ namespace Terminal.Models
 
         public Product(string code, double price, double? discountPrice = null, int? discountQuantity = null)
         {
-            code = code.Trim();
-            if (string.IsNullOrEmpty(code))
+            if (string.IsNullOrWhiteSpace(code))
                 throw new TerminalException(emptyCodeMessage);
+            code = code.Trim();
             Code = code;
             SetPricing(price, discountPrice, discountQuantity);
         }
