@@ -34,7 +34,7 @@ namespace TerminalTests
         [InlineData(4.25, "B")]
         [InlineData(1, "C")]
         [InlineData(0.75, "D")]
-        public async void PointOfSaleTerminalCalculate_ReturnsRigthValueAsync(double expectedResult, params string[] data)
+        public async Task PointOfSaleTerminalCalculate_ReturnsRigthValueAsync(double expectedResult, params string[] data)
         {
             //Arrange 
             foreach(var code in data)
@@ -55,7 +55,7 @@ namespace TerminalTests
         [InlineData("A", "B", "C", " ")]
         [InlineData("A", "B", "C", "")]
         [InlineData("K")]
-        public async void PointOfSaleTerminalCalculate_ShouldThrowErrorWithBadParamAsync(params string[] data)
+        public async Task PointOfSaleTerminalCalculate_ShouldThrowErrorWithBadParamAsync(params string[] data)
         {
             //Arrange 
             foreach (var code in data)
@@ -73,7 +73,7 @@ namespace TerminalTests
         [InlineData(" ", 1.25, 3.5, 3)]
         [InlineData("   ", 1.25, null, null)]
         [InlineData(null, 1.25, null, null)]
-        public async void PointOfSaleTerminalSetPricingCode_ShouldThrowErrorWithEmptyCode(
+        public async Task PointOfSaleTerminalSetPricingCode_ShouldThrowErrorWithEmptyCode(
             string code, double price, double? discountPrice, int? discountQuantity)
         {
             //Arrange 
@@ -84,6 +84,81 @@ namespace TerminalTests
 
             //Assert
             await Assert.ThrowsAsync<TerminalException>(act);
+        }
+
+        [Theory]
+        [InlineData("F", 1.25, null, 3)]
+        [InlineData("D", 1.25, 3.5, null)]
+        [InlineData("A", 1.25, 1, null)]
+        [InlineData("AA", 1.25, null, 5)]
+        public async Task PointOfSaleTerminalSetPricingDiscountParameters_BothShouldBeOrEmptyOrNonEmpty(
+            string code, double price, double? discountPrice, int? discountQuantity)
+        {
+            //Arrange 
+
+            //Act
+            Task act() => terminal.SetPricing(code, price, discountPrice, discountQuantity);
+
+            //Assert
+            await Assert.ThrowsAsync<TerminalException>(act);
+        }
+
+        [Theory]
+        [InlineData("A", -1.25, null, null)]
+        [InlineData("AS", 0.95, -4.2, 5)]
+        [InlineData("AZA ", 0, null, null)]
+        [InlineData(" FG", 1.25, 3.5, -3)]
+        [InlineData("AFG", 1.25, 0, 3)]
+        [InlineData("AFG2", 1.25, 3.5, 0)]
+        public async Task PointOfSaleTerminalSetPricing_ShouldThrowWithNegativeOrZeroPriceOrQuantity(
+            string code, double price, double? discountPrice, int? discountQuantity)
+        {
+            //Arrange 
+
+            //Act
+            Task act() => terminal.SetPricing(code, price, discountPrice, discountQuantity);
+
+            //Assert
+            await Assert.ThrowsAsync<TerminalException>(act);
+        }
+
+        [Theory]
+        [InlineData("A", 1.25, null, null)]
+        [InlineData("B", 0.95, 4.2, 5)]
+        [InlineData("C", 2.8, null, null)]
+        [InlineData("D", 1.25, 3.5, 3)]
+        public async Task SetPricing_ShouldUpdateExisting(
+            string code, double price, double? discountPrice, int? discountQuantity)
+        {
+            //Arrange
+            
+
+            //Act
+            await terminal.SetPricing(code, price, discountPrice, discountQuantity);
+
+            //Assert
+            FakeRepository.Verify(r => r.UpdateAsync(It.Is<Product>(
+                p => p.Price == price && p.DiscountPrice == discountPrice && p.DiscountQuantity == discountQuantity)), Times.Once());
+        }
+
+        [Theory]
+        [InlineData("A1", 1.25, null, null)]
+        [InlineData("B1", 0.95, 4.2, 5)]
+        [InlineData("C1", 2.8, null, null)]
+        [InlineData("D2", 1.25, 3.5, 3)]
+        public async Task SetPricing_ShouldCreateNew(
+            string code, double price, double? discountPrice, int? discountQuantity)
+        {
+            //Arrange
+
+
+            //Act
+            await terminal.SetPricing(code, price, discountPrice, discountQuantity);
+
+            //Assert
+            FakeRepository.Verify(r => r.CreateAsync(It.Is<Product>(
+                p => p.Price == price && p.DiscountPrice == discountPrice && p.DiscountQuantity == discountQuantity)), Times.Once());
+
         }
     }
 }
