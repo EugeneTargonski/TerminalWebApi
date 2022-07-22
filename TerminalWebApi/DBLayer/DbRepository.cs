@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Terminal.Interfaces;
+using TerminalWebApi.Exeptions;
 
 namespace TerminalWebApi.DBLayer
 {
@@ -7,7 +8,7 @@ namespace TerminalWebApi.DBLayer
     {
         private readonly ApplicationContext context;
         private readonly DbSet<T> entities;
-        string errorMessage = string.Empty;
+        private const string errorMessage = "Entity is empty";
         public DbRepository(ApplicationContext context)
         {
             this.context = context;
@@ -25,7 +26,7 @@ namespace TerminalWebApi.DBLayer
         {
             if (entity == null)
             {
-                throw new ArgumentNullException("entity");
+                throw new TerminalWebApiException(errorMessage);
             }
             entities.Add(entity);
             await context.SaveChangesAsync();
@@ -34,7 +35,7 @@ namespace TerminalWebApi.DBLayer
         {
             if (entity == null)
             {
-                throw new ArgumentNullException("entity");
+                throw new TerminalWebApiException(errorMessage);
             }
             entities.Update(entity);
             await context.SaveChangesAsync();
@@ -44,7 +45,7 @@ namespace TerminalWebApi.DBLayer
             var entity = await GetAsync(id);
             if (entity == null)
             {
-                throw new ArgumentNullException($"Could not find entity with id = {id}");
+                throw new TerminalWebApiException($"Could not find entity with id = {id}");
             }
             entities.Remove(entity);
             await context.SaveChangesAsync();
@@ -60,7 +61,7 @@ namespace TerminalWebApi.DBLayer
             var entity = await GetByCodeAsync(code);
             if (entity == null)
             {
-                throw new ArgumentNullException($"Could not find entity with code = {code}");
+                throw new TerminalWebApiException($"Could not find entity with code = {code}");
             }
             entities.Remove(entity);
             await context.SaveChangesAsync();
