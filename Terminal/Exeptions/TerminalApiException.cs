@@ -1,4 +1,4 @@
-﻿namespace TerminalWebApi.Exeptions
+﻿namespace Terminal.Exeptions
 {
     public class TerminalApiException : Exception
     {

@@ -1,4 +1,4 @@
-﻿namespace TerminalWebApi.Interfaces
+﻿namespace Terminal.Interfaces
 {
     public interface IRepository<T> where T : class, IHasId, IHasCode
     {

@@ -1,7 +1,7 @@
-﻿using TerminalWebApi.Exeptions;
-using TerminalWebApi.Interfaces;
+﻿using Terminal.Exeptions;
+using Terminal.Interfaces;
 
-namespace TerminalWebApi.Models
+namespace Terminal.Models
 {
     public class Product: IHasId, IHasCode
     {

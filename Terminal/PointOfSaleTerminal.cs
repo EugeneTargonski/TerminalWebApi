@@ -1,8 +1,8 @@
-﻿using TerminalWebApi.Interfaces;
-using TerminalWebApi.Models;
-using TerminalWebApi.Exeptions;
+﻿using Terminal.Interfaces;
+using Terminal.Models;
+using Terminal.Exeptions;
 
-namespace TerminalWebApi.Services
+namespace Terminal
 {
     public class PointOfSaleTerminal : IPointOfSaleTerminal
     {

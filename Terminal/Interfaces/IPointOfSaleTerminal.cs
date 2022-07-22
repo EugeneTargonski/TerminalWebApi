@@ -1,4 +1,4 @@
-﻿namespace TerminalWebApi.Interfaces
+﻿namespace Terminal.Interfaces
 {
     public interface IPointOfSaleTerminal
     {

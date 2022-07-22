@@ -1,5 +1,5 @@
-﻿using TerminalWebApi.Interfaces;
-using TerminalWebApi.Models;
+﻿using Terminal.Interfaces;
+using Terminal.Models;
 
 namespace TerminalWebApi.API
 {

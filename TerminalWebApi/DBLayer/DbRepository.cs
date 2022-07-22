@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using TerminalWebApi.Interfaces;
+using Terminal.Interfaces;
 
 namespace TerminalWebApi.DBLayer
 {

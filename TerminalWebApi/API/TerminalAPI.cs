@@ -1,5 +1,5 @@
-﻿using TerminalWebApi.Interfaces;
-using TerminalWebApi.Exeptions;
+﻿using Terminal.Interfaces;
+using Terminal.Exeptions;
 
 namespace TerminalWebApi.API
 {

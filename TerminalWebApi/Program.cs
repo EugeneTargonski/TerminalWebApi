@@ -1,8 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using TerminalWebApi.API;
 using TerminalWebApi.DBLayer;
-using TerminalWebApi.Interfaces;
-using TerminalWebApi.Services;
+using Terminal.Interfaces;
+using Terminal;
 
 
 var builder = WebApplication.CreateBuilder(args);
