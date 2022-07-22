@@ -34,7 +34,7 @@ namespace TerminalTests
         [InlineData(4.25, "B")]
         [InlineData(1, "C")]
         [InlineData(0.75, "D")]
-        public async void PointOfSaleTerminalCalculate_ReturnsRigthValueAsync(double expectedResult, params string[] data)
+        public async void PointOfSaleTerminalCalculate_ReturnsRightValueAsync(double expectedResult, params string[] data)
         {
             //Arrange 
             foreach(var code in data)
