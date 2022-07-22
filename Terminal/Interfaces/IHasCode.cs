@@ -2,6 +2,6 @@
 {
     public interface IHasCode
     {
-        string Code { get; set; }
+        string Code { get; }
     }
 }

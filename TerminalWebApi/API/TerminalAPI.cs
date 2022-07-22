@@ -1,5 +1,5 @@
 ﻿using Terminal.Interfaces;
-using Terminal.Exeptions;
+using TerminalWebApi.Exeptions;
 
 namespace TerminalWebApi.API
 {
@@ -13,7 +13,7 @@ namespace TerminalWebApi.API
             {
                 IEnumerable<string>? codes = await request.ReadFromJsonAsync<IEnumerable<string>>();
                 if (codes == null)
-                    throw new TerminalApiException("Bad Request");
+                    throw new TerminalWebApiException("Bad Request");
 
                 foreach (var code in codes)
                     terminal.Scan(code);

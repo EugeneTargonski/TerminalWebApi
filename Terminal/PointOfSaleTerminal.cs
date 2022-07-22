@@ -23,7 +23,7 @@ namespace Terminal
                 var product = await _repository.GetByCodeAsync(productCode.Key);
 
                 if (product == null)
-                    throw new TerminalApiException($"Product with unknown code '{productCode}' was found.");
+                    throw new TerminalException($"Product with unknown code '{productCode}' was found.");
 
                 if (product.DiscountPrice != null && product.DiscountQuantity != null)
                     sum += (int)productCode.Value / (int)product.DiscountQuantity * (double)product.DiscountPrice
@@ -46,9 +46,18 @@ namespace Terminal
             }
         }
 
-        public void SetPricing(string productCode, double price, double? discountPrice = null, int? discountQuantity = null)
+        public async void SetPricing(string productCode, double price, double? discountPrice = null, int? discountQuantity = null)
         {
-            throw new NotImplementedException();
+            var product = await _repository.GetByCodeAsync(productCode);
+            if (product == null)
+            {
+                await _repository.CreateAsync(new Product(productCode, price, discountPrice, discountQuantity));
+            }
+            else
+            {
+                product.SetPricing(price, discountPrice, discountQuantity);
+                await _repository.UpdateAsync(product);
+            }
         }
     }
 }
