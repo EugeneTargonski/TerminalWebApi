@@ -1,6 +1,6 @@
 ﻿namespace Terminal.Exeptions
 {
-    internal class TerminalException : Exception
+    public class TerminalException : Exception
     {
         public TerminalException(string? message) : base(message)
         {

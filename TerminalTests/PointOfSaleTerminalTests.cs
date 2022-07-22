@@ -1,7 +1,8 @@
 using Moq;
+using Terminal;
+using Terminal.Exeptions;
 using Terminal.Interfaces;
 using Terminal.Models;
-using Terminal;
 
 namespace TerminalTests
 {
@@ -29,6 +30,10 @@ namespace TerminalTests
         [InlineData(13.25, "A", "B", "C", "D", "A", "B", "A")]
         [InlineData(6, "C", "C", "C", "C", "C", "C", "C")]
         [InlineData(7.25, "A", "B", "C", "D")]
+        [InlineData(1.25, "A")]
+        [InlineData(4.25, "B")]
+        [InlineData(1, "C")]
+        [InlineData(0.75, "D")]
         public async void PointOfSaleTerminalCalculate_ReturnsRigthValueAsync(double expectedResult, params string[] data)
         {
             //Arrange 
@@ -40,6 +45,27 @@ namespace TerminalTests
 
             //Assert
             Assert.Equal(expectedResult, result);
+        }
+
+        [Theory]
+        [InlineData("A", "B", "C", "D", "A", "B", "L")]
+        [InlineData("I", "B", "C", "D", "A", "B", "B")]
+        [InlineData("C", "C", "C", "E", "C", "C", "C")]
+        [InlineData("A", "B", "C", "_")]
+        [InlineData("A", "B", "C", " ")]
+        [InlineData("A", "B", "C", "")]
+        [InlineData("K")]
+        public async void PointOfSaleTerminalCalculate_ShouldThrowErrorWithBadParamAsync(params string[] data)
+        {
+            //Arrange 
+            foreach (var code in data)
+                terminal.Scan(code);
+
+            //Act
+            Task act() => terminal.CalculateTotal();
+
+            //Assert
+            await Assert.ThrowsAsync<TerminalException>(act);
         }
     }
 }
