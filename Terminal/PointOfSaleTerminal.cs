@@ -46,7 +46,7 @@ namespace Terminal
             }
         }
 
-        public async void SetPricing(string productCode, double price, double? discountPrice = null, int? discountQuantity = null)
+        public async Task SetPricing(string productCode, double price, double? discountPrice = null, int? discountQuantity = null)
         {
             var product = await _repository.GetByCodeAsync(productCode);
             if (product == null)

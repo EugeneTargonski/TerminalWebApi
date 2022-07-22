@@ -34,7 +34,7 @@ namespace TerminalTests
         [InlineData(4.25, "B")]
         [InlineData(1, "C")]
         [InlineData(0.75, "D")]
-        public async void PointOfSaleTerminalCalculate_ReturnsRightValueAsync(double expectedResult, params string[] data)
+        public async void PointOfSaleTerminalCalculate_ReturnsRigthValueAsync(double expectedResult, params string[] data)
         {
             //Arrange 
             foreach(var code in data)
@@ -63,6 +63,24 @@ namespace TerminalTests
 
             //Act
             Task act() => terminal.CalculateTotal();
+
+            //Assert
+            await Assert.ThrowsAsync<TerminalException>(act);
+        }
+
+        [Theory]
+        [InlineData("", 1.25, null, null)]
+        [InlineData(" ", 1.25, 3.5, 3)]
+        [InlineData("   ", 1.25, null, null)]
+        [InlineData(null, 1.25, null, null)]
+        public async void PointOfSaleTerminalSetPricingCode_ShouldThrowErrorWithEmptyCode(
+            string code, double price, double? discountPrice, int? discountQuantity)
+        {
+            //Arrange 
+
+
+            //Act
+            Task act() => terminal.SetPricing(code, price, discountPrice, discountQuantity);
 
             //Assert
             await Assert.ThrowsAsync<TerminalException>(act);
