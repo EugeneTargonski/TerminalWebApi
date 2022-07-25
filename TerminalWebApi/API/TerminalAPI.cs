@@ -8,9 +8,9 @@ namespace TerminalWebApi.API
         const string section = "TerminalApi";
         const string keyApiPath = "ApiPath";
 
-        public static WebApplication ConfigureAPI(WebApplication app, IConfiguration configuration)
+        public static WebApplication ConfigureAPI(WebApplication app)
         {
-            string apiPath = configuration.GetSection(section).GetValue<string>(keyApiPath);
+            string apiPath = app.Configuration.GetSection(section).GetValue<string>(keyApiPath);
 
             app.MapGet(apiPath, async (ITerminal terminal, HttpRequest request) =>
             {

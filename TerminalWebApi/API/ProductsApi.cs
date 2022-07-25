@@ -9,11 +9,10 @@ namespace TerminalWebApi.API
         const string keyApiPath = "ApiPath";
         const string keyApiPathParameterized = "ApiPathParameterized";
 
-        public static WebApplication ConfigureAPI(WebApplication app, IConfiguration configuration)
+        public static WebApplication ConfigureAPI(WebApplication app)
         {
-
-            string apiPath = configuration.GetSection(section).GetValue<string>(keyApiPath);
-            string apiPathWithId = configuration.GetSection(section).GetValue<string>(keyApiPathParameterized);
+            string apiPath = app.Configuration.GetSection(section).GetValue<string>(keyApiPath);
+            string apiPathWithId = app.Configuration.GetSection(section).GetValue<string>(keyApiPathParameterized);
 
             app.MapGet(apiPath, (IRepository<Product> repository) => repository.GetAll());
             app.MapGet(apiPathWithId, async (string code, IRepository<Product> repository) => await repository.GetAsync(code));
