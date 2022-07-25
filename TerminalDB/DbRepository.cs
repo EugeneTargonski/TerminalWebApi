@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Terminal.Interfaces;
-using TerminalWebApi.Exeptions;
 
-namespace TerminalWebApi.DBLayer
+namespace TerminalDB
 {
     public class DbRepository<T> : IRepository<T> where T : class, IHasId, IHasCode
     {
@@ -26,7 +25,7 @@ namespace TerminalWebApi.DBLayer
         {
             if (entity == null)
             {
-                throw new TerminalWebApiException(errorMessage);
+                throw new TerminalDbException(errorMessage);
             }
             entities.Add(entity);
             await context.SaveChangesAsync();
@@ -35,7 +34,7 @@ namespace TerminalWebApi.DBLayer
         {
             if (entity == null)
             {
-                throw new TerminalWebApiException(errorMessage);
+                throw new TerminalDbException(errorMessage);
             }
             entities.Update(entity);
             await context.SaveChangesAsync();
@@ -45,23 +44,21 @@ namespace TerminalWebApi.DBLayer
             var entity = await GetAsync(id);
             if (entity == null)
             {
-                throw new TerminalWebApiException($"Could not find entity with id = {id}");
+                throw new TerminalDbException($"Could not find entity with id = {id}");
             }
             entities.Remove(entity);
             await context.SaveChangesAsync();
         }
-
         public async Task<T?> GetByCodeAsync(string code)
         {
             return await entities.FirstOrDefaultAsync(e => e.Code == code);
         }
-
         public async Task DeleteAsync(string code)
         {
             var entity = await GetByCodeAsync(code);
             if (entity == null)
             {
-                throw new TerminalWebApiException($"Could not find entity with code = {code}");
+                throw new TerminalDbException($"Could not find entity with code = {code}");
             }
             entities.Remove(entity);
             await context.SaveChangesAsync();
