@@ -13,7 +13,7 @@ namespace TerminalDB
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Product>().HasIndex(p => p.Code).IsUnique();
+            modelBuilder.Entity<Product>().HasKey(p => p.Code);
         }
     }
 }

@@ -9,7 +9,7 @@ namespace TerminalWebApi.API
 
         public static WebApplication ConfigureAPI(WebApplication app)
         {
-            app.MapGet(_apiPath, async (IPointOfSaleTerminal terminal, HttpRequest request) =>
+            app.MapGet(_apiPath, async (ITerminal terminal, HttpRequest request) =>
             {
                 IEnumerable<string>? codes = await request.ReadFromJsonAsync<IEnumerable<string>>();
                 if (codes == null)

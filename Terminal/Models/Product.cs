@@ -3,7 +3,7 @@ using Terminal.Interfaces;
 
 namespace Terminal.Models
 {
-    public class Product: IHasId, IHasCode
+    public class Product: IHasCode
     {
         // If one parameter is empty and the second is not, then most likely a human error has occurred.
         private const string emptyDiscountParameterMessage = 
@@ -26,8 +26,6 @@ namespace Terminal.Models
             Code = code;
             SetPricing(price, discountPrice, discountQuantity);
         }
-
-        public int Id { get; set;  }
         public string Code { get; }
         public double Price { get; private set; }
         public double? DiscountPrice { get; private set; }

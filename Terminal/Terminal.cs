@@ -4,23 +4,22 @@ using Terminal.Exeptions;
 
 namespace Terminal
 {
-    public class PointOfSaleTerminal : IPointOfSaleTerminal
+    public class Terminal : ITerminal
     {
         private readonly IRepository<Product> _repository;
         private readonly Dictionary<string, int> _scannedList;
 
-        public PointOfSaleTerminal(IRepository<Product> repository)
+        public Terminal(IRepository<Product> repository)
         {
             _repository = repository;
             _scannedList = new Dictionary<string, int>();
         }
-
         public async Task<double> CalculateTotal()
         {
             double sum = 0;
             foreach(var productCode in _scannedList)
             {
-                var product = await _repository.GetByCodeAsync(productCode.Key);
+                var product = await _repository.GetAsync(productCode.Key);
 
                 if (product == null)
                     throw new TerminalException($"Product with unknown code '{productCode}' was found.");
@@ -33,7 +32,6 @@ namespace Terminal
             }
             return sum;
         }
-
         public void Scan(string productCode)
         {
             if (!_scannedList.ContainsKey(productCode))
@@ -43,20 +41,6 @@ namespace Terminal
             else
             {
                 _scannedList[productCode]++;
-            }
-        }
-
-        public async Task SetPricing(string productCode, double price, double? discountPrice = null, int? discountQuantity = null)
-        {
-            var product = await _repository.GetByCodeAsync(productCode);
-            if (product == null)
-            {
-                await _repository.CreateAsync(new Product(productCode, price, discountPrice, discountQuantity));
-            }
-            else
-            {
-                product.SetPricing(price, discountPrice, discountQuantity);
-                await _repository.UpdateAsync(product);
             }
         }
     }
