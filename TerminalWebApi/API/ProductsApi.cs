@@ -5,19 +5,23 @@ namespace TerminalWebApi.API
 {
     public static class ProductsApi
     {
-        static readonly string _apiPath = "api/products";
-        static readonly string _apiPathWithId = "/api/products/{code}";
+        const string section = "ProductsApi";
+        const string keyApiPath = "ApiPath";
+        const string keyApiPathParameterized = "ApiPathParameterized";
 
-        public static WebApplication ConfigureAPI(WebApplication app)
+        public static WebApplication ConfigureAPI(WebApplication app, IConfiguration configuration)
         {
-            app.MapGet(_apiPath, (IRepository<Product> repository) => repository.GetAll());
-            app.MapGet(_apiPathWithId, async (string code, IRepository<Product> repository) => await repository.GetAsync(code));
-            app.MapDelete(_apiPathWithId, async (string code, IRepository<Product> repository) => await repository.DeleteAsync(code));
-            app.MapPost(_apiPath, 
-                async (Product[] products, IRepository<Product> repository) => await CreateMultipleAsync(products, repository));
-            app.MapPut(_apiPath,
-                async (Product product, IRepository<Product> repository) => await repository.UpdateAsync(product));
 
+            string apiPath = configuration.GetSection(section).GetValue<string>(keyApiPath);
+            string apiPathWithId = configuration.GetSection(section).GetValue<string>(keyApiPathParameterized);
+
+            app.MapGet(apiPath, (IRepository<Product> repository) => repository.GetAll());
+            app.MapGet(apiPathWithId, async (string code, IRepository<Product> repository) => await repository.GetAsync(code));
+            app.MapDelete(apiPathWithId, async (string code, IRepository<Product> repository) => await repository.DeleteAsync(code));
+            app.MapPost(apiPath, 
+                async (Product[] products, IRepository<Product> repository) => await CreateMultipleAsync(products, repository));
+            app.MapPut(apiPath,
+                async (Product product, IRepository<Product> repository) => await repository.UpdateAsync(product));
             return app;
         }
 

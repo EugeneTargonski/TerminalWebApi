@@ -5,11 +5,14 @@ namespace TerminalWebApi.API
 {
     public class TerminalAPI
     {
-        static readonly string _apiPath = "api/terminal";
+        const string section = "TerminalApi";
+        const string keyApiPath = "ApiPath";
 
-        public static WebApplication ConfigureAPI(WebApplication app)
+        public static WebApplication ConfigureAPI(WebApplication app, IConfiguration configuration)
         {
-            app.MapGet(_apiPath, async (ITerminal terminal, HttpRequest request) =>
+            string apiPath = configuration.GetSection(section).GetValue<string>(keyApiPath);
+
+            app.MapGet(apiPath, async (ITerminal terminal, HttpRequest request) =>
             {
                 IEnumerable<string>? codes = await request.ReadFromJsonAsync<IEnumerable<string>>();
                 if (codes == null)
