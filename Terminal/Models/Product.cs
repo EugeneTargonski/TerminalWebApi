@@ -3,7 +3,7 @@ using Terminal.Interfaces;
 
 namespace Terminal.Models
 {
-    public class Product: IHasCode
+    public record class Product: IHasCode
     {
         // If one parameter is empty and the second is not, then most likely a human error has occurred.
         private const string emptyDiscountParameterMessage = 

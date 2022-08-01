@@ -7,9 +7,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TerminalWebApi", "TerminalW
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Terminal", "Terminal\Terminal.csproj", "{7DBB7B75-C4E7-4927-A4FB-34F299482B78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerminalTests", "TerminalTests\TerminalTests.csproj", "{814300FD-3DAB-4401-AAEC-9F538A944EBE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TerminalTests", "TerminalTests\TerminalTests.csproj", "{814300FD-3DAB-4401-AAEC-9F538A944EBE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerminalDB", "TerminalDB\TerminalDB.csproj", "{5DA614DC-9209-41C2-8003-0AC90AFE9B66}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TerminalDB", "TerminalDB\TerminalDB.csproj", "{5DA614DC-9209-41C2-8003-0AC90AFE9B66}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerminalFunc", "TerminalFunc\TerminalFunc.csproj", "{3D0EC80A-53DE-46B8-9010-1F0ACB85C7FB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerminalCosmosDB", "TerminalCosmosDB\TerminalCosmosDB.csproj", "{83591957-0C73-4DC6-AC36-3E1B2B5863F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +37,14 @@ Global
 		{5DA614DC-9209-41C2-8003-0AC90AFE9B66}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DA614DC-9209-41C2-8003-0AC90AFE9B66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DA614DC-9209-41C2-8003-0AC90AFE9B66}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D0EC80A-53DE-46B8-9010-1F0ACB85C7FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D0EC80A-53DE-46B8-9010-1F0ACB85C7FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D0EC80A-53DE-46B8-9010-1F0ACB85C7FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D0EC80A-53DE-46B8-9010-1F0ACB85C7FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83591957-0C73-4DC6-AC36-3E1B2B5863F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83591957-0C73-4DC6-AC36-3E1B2B5863F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83591957-0C73-4DC6-AC36-3E1B2B5863F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83591957-0C73-4DC6-AC36-3E1B2B5863F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

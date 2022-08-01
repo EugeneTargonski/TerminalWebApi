@@ -1,7 +1,4 @@
-﻿using Moq;
-using Terminal;
-using Terminal.Exeptions;
-using Terminal.Interfaces;
+﻿using Terminal.Exeptions;
 using Terminal.Models;
 
 namespace TerminalTests
