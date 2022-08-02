@@ -10,7 +10,7 @@ using Terminal.Models;
 using Terminal.Interfaces;
 using System.Collections.Generic;
 
-namespace TerminalFunc
+namespace TerminalFunc.Functions
 {
     public class Products
     {
@@ -37,8 +37,25 @@ namespace TerminalFunc
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             IEnumerable<string> codes = JsonConvert.DeserializeObject<IEnumerable<string>>(requestBody);
             foreach (string code in codes)
-                _terminal.Scan(code); 
-            return new OkObjectResult(_terminal.CalculateTotal());
+                _terminal.Scan(code);
+            var result = await _terminal.CalculateTotal();
+            return new OkObjectResult(result);
+        }
+
+        [FunctionName("ProductsGetById")]
+        public async Task<IActionResult> ProductsGetById(
+            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "products/{code}")] HttpRequest req, ILogger log, string code)
+        {
+            var result = await _repository.GetAsync(code);
+            return new OkObjectResult(result);
+        }
+
+        [FunctionName("ProductsDeleteById")]
+        public async Task<IActionResult> ProductsDeleteById(
+            [HttpTrigger(AuthorizationLevel.Function, "delete", Route = "products/{code}")] HttpRequest req, ILogger log, string code)
+        {
+            await _repository.DeleteAsync(code);
+            return new OkObjectResult("Deleted");
         }
 
         [FunctionName("ProductsGet")]
