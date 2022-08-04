@@ -23,25 +23,6 @@ namespace TerminalFunc.Functions
             _terminal = terminal;
         }
 
-        [FunctionName("KeyVaultTest")]
-        public IActionResult KeyVaultTest(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "test")] HttpRequest req, ILogger log)
-        {
-            return new OkObjectResult("Ok");
-        }
-
-        [FunctionName("TerminalGet")]
-        public async Task<IActionResult> TerminalGet(
-            [HttpTrigger(AuthorizationLevel.Function, "get", Route = "terminal")] HttpRequest req, ILogger log)
-        {
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            IEnumerable<string> codes = JsonConvert.DeserializeObject<IEnumerable<string>>(requestBody);
-            foreach (string code in codes)
-                _terminal.Scan(code);
-            var result = await _terminal.CalculateTotal();
-            return new OkObjectResult(result);
-        }
-
         [FunctionName("ProductsGetById")]
         public async Task<IActionResult> ProductsGetById(
             [HttpTrigger(AuthorizationLevel.Function, "get", Route = "products/{code}")] HttpRequest req, ILogger log, string code)

@@ -16,9 +16,8 @@ namespace TerminalFunc.Functions
     {
          private readonly ITerminal _terminal;
 
-        public Terminal(IRepository<Product> repository, ITerminal terminal)
+        public Terminal(ITerminal terminal)
         {
-            _repository = repository;
             _terminal = terminal;
         }
 
