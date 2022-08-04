@@ -16,21 +16,9 @@ namespace Terminal
         }
         public async Task<double> CalculateTotal()
         {
-            double sum = 0;
-            foreach(var productCode in _scannedList)
-            {
-                var product = await _repository.GetAsync(productCode.Key);
-
-                if (product == null)
-                    throw new TerminalException($"Product with unknown code '{productCode}' was found.");
-
-                if (product.DiscountPrice != null && product.DiscountQuantity != null)
-                    sum += (int)productCode.Value / (int)product.DiscountQuantity * (double)product.DiscountPrice
-                        + (int)productCode.Value % (int)product.DiscountQuantity * (double)product.Price;
-                else 
-                    sum += (int)productCode.Value * (double)product.Price;
-            }
-            return sum;
+            var sums = _scannedList.Select(p => Sum(p.Key,p.Value));
+            var result = await Task.WhenAll(sums);
+            return result.Sum();
         }
         public void Scan(string productCode)
         {
@@ -42,6 +30,19 @@ namespace Terminal
             {
                 _scannedList[productCode]++;
             }
+        }
+        private async Task<double> Sum (string productCode, int productQuantity)
+        {
+            var product = await _repository.GetAsync(productCode);
+
+            if (product == null)
+                throw new TerminalException($"Product with unknown code '{productCode}' was found.");
+
+            if (product.DiscountPrice != null && product.DiscountQuantity != null)
+                return productQuantity / (int)product.DiscountQuantity * (double)product.DiscountPrice
+                    + productQuantity % (int)product.DiscountQuantity * (double)product.Price;
+            else
+                return productQuantity * (double)product.Price;
         }
     }
 }
