@@ -21,7 +21,7 @@ namespace TerminalWebApi.API
                 foreach (var code in codes)
                     terminal.Scan(code);
 
-                return terminal.CalculateTotal();
+                return await terminal.CalculateTotal();
             });
 
             return app;

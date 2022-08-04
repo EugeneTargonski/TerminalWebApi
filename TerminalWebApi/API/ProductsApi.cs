@@ -26,8 +26,8 @@ namespace TerminalWebApi.API
 
         private static async Task CreateMultipleAsync(Product[] products, IRepository<Product> repository)
         {
-            foreach (Product product in products)
-                await repository.CreateAsync(product);
+            var tasks = products.Select(p => repository.CreateAsync(p));
+            await Task.WhenAll(tasks);
         }
     }
 }
