@@ -15,12 +15,10 @@ namespace TerminalFunc.Functions
     public class Products
     {
         private readonly IRepository<Product> _repository;
-        private readonly ITerminal _terminal;
 
-        public Products(IRepository<Product> repository, ITerminal terminal)
+        public Products(IRepository<Product> repository)
         {
             _repository = repository;
-            _terminal = terminal;
         }
 
         [FunctionName("ProductsGetById")]
