@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 using Terminal.Models;
 using Terminal.Interfaces;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace TerminalFunc.Functions
 {
@@ -52,12 +53,9 @@ namespace TerminalFunc.Functions
             int i = 0;
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             Product[] products = JsonConvert.DeserializeObject<Product[]>(requestBody);
-
-            foreach (var product in products)
-            {
-                i++;
-                await _repository.CreateAsync(product);
-            }
+            
+            var tasks = products.Select(p => _repository.CreateAsync(p));
+            await Task.WhenAll(tasks);
 
             return new OkObjectResult($"{i} product(s) created/updated");
         }
